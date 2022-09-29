@@ -1,59 +1,46 @@
-// pipeline{
+pipeline{
 
-// 	agent any
+	agent any
 
-// 	environment {
-// 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-// 	}
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
 
-// 	stages {
+	stages {
 
-// 	    stage('gitclone') {
+	    stage('gitclone') {
 
-// 			steps {
-// 				git 'https://github.com/shazforiot/nodeapp_test.git'
-// 			}
-// 		}
+			steps {
+				git 'https://github.com/shazforiot/nodeapp_test.git'
+			}
+		}
 
-// 		stage('Build') {
+		stage('Build') {
 
-// 			steps {
-// 				sh 'docker build -t thetips4you/nodeapp_test:latest .'
-// 			}
-// 		}
+			steps {
+				sh 'docker build -t buinguyen/nodeapp_test:latest .'
+			}
+		}
 
-// 		stage('Login') {
+		stage('Login') {
 
-// 			steps {
-// 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-// 			}
-// 		}
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
 
-// 		stage('Push') {
+		stage('Push') {
 
-// 			steps {
-// 				sh 'docker push thetips4you/nodeapp_test:latest'
-// 			}
-// 		}
-// 	}
+			steps {
+				sh 'docker push buinguyen/nodeapp_test:latest'
+			}
+		}
+	}
 
-// 	post {
-// 		always {
-// 			sh 'docker logout'
-// 		}
-// 	}
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
 
-// }
-
-
-pipeline {
-    agent any
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-    }
 }

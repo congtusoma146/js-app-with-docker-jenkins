@@ -8,7 +8,7 @@ pipeline{
 
 	stages {
 
-	    stage('gitclone') {
+		stage('gitclone') {
 
 			steps {
 				git 'https://github.com/nguyenbuitk/js-app-with-docker-jenkins'

@@ -11,14 +11,14 @@ pipeline{
 	    stage('gitclone') {
 
 			steps {
-				git 'https://github.com/shazforiot/nodeapp_test.git'
+				git 'https://github.com/nguyenbuitk/js-app-with-docker-jenkins'
 			}
 		}
 
 		stage('Build') {
 
 			steps {
-				sh 'docker build -t buinguyen/nodeapp_test:latest .'
+				sh 'docker build -t buinguyen/js-app-docker-container:latest .'
 			}
 		}
 
@@ -32,7 +32,7 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push buinguyen/nodeapp_test:latest'
+				sh 'docker push buinguyen/js-app-docker-container:latest'
 			}
 		}
 	}

@@ -4,12 +4,14 @@ pipeline{
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+		VERSION = "v-0.${env.BUILD_ID}"
+		APP_NAME = "js-app"
+		REPO_NAME = "buinguyen"
 	}
 
 	stages {
 
-		stage('gitclone') {
-
+		stage('Gitclone') {
 			steps {
 				git 'https://github.com/nguyenbuitk/js-app-with-docker-jenkins.git'
 			}
@@ -18,12 +20,17 @@ pipeline{
 		stage('Build') {
 
 			steps {
-				sh 'docker build -t buinguyen/js-app-docker-container:latest .'
+				script {
+					IMAGE_NAME = "${REPO_NAME}/${APP_NAME}:${VERSION}"
+				}
+				echo "Running ${VERSION} on ${env.JENKINS_URL}"
+            	echo "for branch ${env.BRANCH_NAME}"
+            	sh "docker build -t ${IMAGE_NAME} ."
+
 			}
 		}
 
 		stage('Login') {
-
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
@@ -32,7 +39,7 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push buinguyen/js-app-docker-container:latest'
+				sh "docker push ${IMAGE_NAME}"
 			}
 		}
 	}
